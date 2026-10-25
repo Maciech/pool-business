@@ -1,0 +1,58 @@
+<div class="calc">
+  <header>
+    <h3>Who's coming?</h3>
+    <p>We'll find the cheapest mix of tickets for your group · <strong>{{ passLabel() }}</strong></p>
+  </header>
+
+  <div class="calc__body">
+    <ul class="counters">
+      @for (row of rows; track row.key) {
+        <li>
+          <span class="counters__label">
+            {{ row.label }}
+            <small>{{ row.hint }}</small>
+          </span>
+          <span class="stepper">
+            <button
+              type="button"
+              (click)="store.adjust(row.key, -1)"
+              [disabled]="store.party()[row.key] === 0"
+              [attr.aria-label]="'Remove one ' + row.label"
+            >
+              −
+            </button>
+            <output aria-live="polite">{{ store.party()[row.key] }}</output>
+            <button type="button" (click)="store.adjust(row.key, 1)" [attr.aria-label]="'Add one ' + row.label">
+              +
+            </button>
+          </span>
+        </li>
+      }
+    </ul>
+
+    <div class="receipt" aria-live="polite">
+      @if (store.headcount() === 0) {
+        <p class="receipt__empty">Add some swimmers to see a price.</p>
+      } @else {
+        <ul>
+          @for (line of store.quote().lines; track line.label) {
+            <li>
+              <span>{{ line.qty }} × {{ line.label }}</span>
+              <span>{{ line.subtotal | money }}</span>
+            </li>
+          }
+        </ul>
+        <div class="receipt__total">
+          <span>Total</span>
+          <strong class="display">{{ store.quote().total | money: '0 zł' }}</strong>
+        </div>
+        @if (store.savings() > 0) {
+          <p class="receipt__save">
+            You save <strong>{{ store.savings() | money }}</strong> with {{ store.quote().familyTickets }}
+            family {{ store.quote().familyTickets === 1 ? 'ticket' : 'tickets' }}
+          </p>
+        }
+      }
+    </div>
+  </div>
+</div>

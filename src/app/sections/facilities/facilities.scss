@@ -1,0 +1,157 @@
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 12px 48px;
+  align-items: end;
+  margin-bottom: 56px;
+
+  .eyebrow {
+    grid-column: 1 / -1;
+  }
+
+  .section-title {
+    margin: 0;
+  }
+
+  .lede {
+    margin: 0;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.card {
+  --bg: var(--pool);
+  --fg: var(--cream);
+  position: relative;
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+  padding: 26px;
+  border-radius: var(--radius);
+  background: var(--tiles), var(--bg);
+  color: var(--fg);
+  overflow: hidden;
+  transition: transform 0.4s var(--ease-out);
+
+  /* Rippling ring that grows on hover */
+  &::after {
+    content: '';
+    position: absolute;
+    width: 260px;
+    aspect-ratio: 1;
+    right: -110px;
+    top: -110px;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+    box-shadow:
+      0 0 0 22px transparent,
+      0 0 0 24px currentColor;
+    opacity: 0.18;
+    transition: transform 0.6s var(--ease-out);
+  }
+
+  &:hover {
+    transform: translateY(-6px) rotate(-0.6deg);
+
+    &::after {
+      transform: scale(1.25);
+    }
+  }
+
+  &--sun {
+    --bg: var(--sun);
+    --fg: var(--ink);
+  }
+
+  &--flag {
+    --bg: var(--flag);
+    --fg: #fff;
+  }
+
+  &--deep {
+    --bg: var(--ink);
+  }
+
+  &__stat {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: auto;
+
+    .display {
+      font-size: 5.2rem;
+    }
+
+    small {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+  }
+
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-stretch: 85%;
+    font-size: 1.45rem;
+    line-height: 1.1;
+    text-transform: uppercase;
+    margin: 24px 0 8px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.95rem;
+    opacity: 0.88;
+  }
+}
+
+.amenities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 36px 0 0;
+
+  li {
+    padding: 8px 16px 8px 12px;
+    border-radius: 999px;
+    background: var(--surface-raised);
+    box-shadow: inset 0 0 0 1px var(--line);
+    font-size: 0.9rem;
+
+    &::before {
+      content: '✓';
+      color: var(--pool);
+      font-weight: 700;
+      margin-right: 8px;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .head {
+    grid-template-columns: 1fr;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    min-height: 260px;
+  }
+}

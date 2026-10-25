@@ -1,0 +1,76 @@
+<section id="hours" class="section hours">
+  <div class="wrap grid">
+    <div class="week" appReveal>
+      <p class="eyebrow">Opening hours</p>
+      <h2 class="section-title">Seven days<br />a week</h2>
+
+      <table class="table">
+        <caption class="visually-hidden">Weekly opening hours</caption>
+        <tbody>
+          @for (slot of hours.week; track slot.day) {
+            <tr [class.is-today]="slot.day === hours.today()">
+              <th scope="row">
+                {{ dayNames[slot.day] }}
+                @if (slot.day === hours.today()) {
+                  <span class="tag">Today</span>
+                }
+              </th>
+              <td class="mono">{{ slot.open }} – {{ slot.close }}</td>
+              <td class="note">{{ slot.note }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      <p class="holiday">{{ holidayNote }}</p>
+    </div>
+
+    <div class="timetable" appReveal [revealDelay]="120">
+      <header>
+        <h3>What's on</h3>
+        <div class="days" role="tablist" aria-label="Day">
+          @for (d of weekOrder; track d) {
+            <button
+              type="button"
+              role="tab"
+              [attr.aria-selected]="selectedDay() === d"
+              [class.is-active]="selectedDay() === d"
+              [class.is-today]="d === hours.today()"
+              (click)="selectedDay.set(d)"
+            >
+              {{ dayNames[d].slice(0, 3) }}
+            </button>
+          }
+        </div>
+        <div class="kinds">
+          @for (k of kinds; track k.id) {
+            <button
+              type="button"
+              class="chip chip--{{ k.id }}"
+              [attr.aria-pressed]="kind() === k.id"
+              (click)="kind.set(k.id)"
+            >
+              {{ k.label }}
+            </button>
+          }
+        </div>
+      </header>
+
+      <ol class="lanes">
+        @for (s of sessions(); track s.title + s.start) {
+          <li class="lane lane--{{ s.kind }}">
+            <span class="lane__time mono">{{ s.start }}<small>{{ s.end }}</small></span>
+            <span class="lane__body">
+              <strong>{{ s.title }}</strong>
+              <small>{{ s.area }}</small>
+            </span>
+          </li>
+        } @empty {
+          <li class="lanes__empty">
+            Nothing of that kind on {{ dayNames[selectedDay()] }}. Open swim runs all day.
+          </li>
+        }
+      </ol>
+      <p class="timetable__foot">Open swim runs during all other opening hours. Lessons need booking.</p>
+    </div>
+  </div>
+</section>

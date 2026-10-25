@@ -1,0 +1,38 @@
+<section id="team" class="section team">
+  <div class="wrap">
+    <header class="head" appReveal>
+      <p class="eyebrow">Poolside crew</p>
+      <h2 class="section-title">Eyes on<br />every lane</h2>
+      <p class="lede">
+        Qualified lifeguards, patient teachers and coaches who still swim every day. You'll find at least four of us on
+        deck whenever we're open.
+      </p>
+    </header>
+
+    <ul class="crew">
+      @for (m of team; track m.name; let i = $index) {
+        <li class="member" appReveal [revealDelay]="i * 100" [style.--swatch]="m.swatch">
+          <div class="member__portrait" aria-hidden="true">
+            <span class="display">{{ m.initials }}</span>
+          </div>
+          <p class="member__role mono">{{ m.role }}</p>
+          <h3>{{ m.name }}</h3>
+          <p class="member__bio">{{ m.bio }}</p>
+          <ul class="member__certs">
+            @for (c of m.certs; track c) {
+              <li>{{ c }}</li>
+            }
+          </ul>
+        </li>
+      }
+    </ul>
+
+    <aside class="jobs" appReveal>
+      <p>
+        <strong>We're hiring lifeguards for the summer.</strong>
+        Full training is provided, with flexible shifts and free swims all year.
+      </p>
+      <a class="btn btn--sun" href="#contact">Join the crew</a>
+    </aside>
+  </div>
+</section>

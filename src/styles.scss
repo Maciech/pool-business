@@ -1,0 +1,253 @@
+/* ==========================================================================
+   Halcyon Lido — global theme
+   Mid-century municipal lido: chlorine teal, deep-end navy, lifeguard
+   vermilion, sun-bleached cream. Tiled surfaces and lane-rope stripes.
+   ========================================================================== */
+
+:root {
+  --ink: #06283d;
+  --deep: #0a3a55;
+  --pool: #0e7c86;
+  --chlorine: #3fd0c9;
+  --foam: #c9f4ef;
+  --cream: #f6efe2;
+  --sand: #eadfc8;
+  --flag: #ff4f2e;
+  --sun: #ffc145;
+
+  --text: var(--ink);
+  --text-soft: #3c5a6b;
+  --surface: var(--cream);
+  --surface-raised: #fffaf1;
+  --line: rgba(6, 40, 61, 0.14);
+
+  --font-display: 'Anybody', 'Arial Narrow', sans-serif;
+  --font-body: 'Atkinson Hyperlegible Next', 'Segoe UI', sans-serif;
+  --font-mono: 'DM Mono', ui-monospace, monospace;
+
+  --radius: 18px;
+  --gutter: clamp(16px, 4vw, 48px);
+  --max: 1240px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Rows of small square pool tiles, drawn with gradients */
+  --tiles: linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px) 0 0 / 22px 22px,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px) 0 0 / 22px 22px;
+
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 84px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--sun);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+::selection {
+  background: var(--chlorine);
+  color: var(--ink);
+}
+
+/* ---------- Layout helpers ---------- */
+
+.wrap {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: clamp(72px, 10vw, 140px);
+  position: relative;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--pool);
+
+  &::before {
+    content: '';
+    width: 28px;
+    height: 6px;
+    background: repeating-linear-gradient(90deg, var(--flag) 0 6px, var(--cream) 6px 8px, var(--sun) 8px 14px, var(--cream) 14px 16px);
+    border-radius: 3px;
+  }
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 850;
+  font-stretch: 62%;
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.section-title {
+  @extend .display;
+  font-size: clamp(2.6rem, 7vw, 5.4rem);
+  margin-top: 14px;
+}
+
+.lede {
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  color: var(--text-soft);
+  max-width: 58ch;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  --bg: var(--flag);
+  --fg: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 26px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-display);
+  font-weight: 750;
+  font-stretch: 110%;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 4px 0 rgba(6, 40, 61, 0.35);
+  transition:
+    transform 0.2s var(--ease-out),
+    box-shadow 0.2s var(--ease-out),
+    background 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 rgba(6, 40, 61, 0.35);
+  }
+
+  &:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 rgba(6, 40, 61, 0.35);
+  }
+
+  &--ghost {
+    --bg: transparent;
+    --fg: currentColor;
+    box-shadow: inset 0 0 0 2px currentColor;
+
+    &:hover,
+    &:active {
+      box-shadow: inset 0 0 0 2px currentColor;
+    }
+  }
+
+  &--sun {
+    --bg: var(--sun);
+    --fg: var(--ink);
+  }
+}
+
+/* ---------- Scroll reveal (driven by RevealDirective) ---------- */
+
+/* An animation (not a transition) so components keep their own hover
+   transitions and transforms; `backwards` fill leaves no state behind. */
+[appReveal] {
+  --reveal-delay: 0ms; /* overridden per element by RevealDirective */
+}
+
+[appReveal]:not(.is-revealed) {
+  opacity: 0;
+}
+
+[appReveal].is-revealed {
+  animation: reveal-in 0.8s var(--ease-out) var(--reveal-delay) backwards;
+}
+
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  [appReveal]:not(.is-revealed) {
+    opacity: 1;
+  }
+}

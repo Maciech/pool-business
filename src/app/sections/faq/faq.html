@@ -1,0 +1,34 @@
+<section id="faq" class="section">
+  <div class="wrap grid">
+    <header appReveal>
+      <p class="eyebrow">Good to know</p>
+      <h2 class="section-title">Before<br />you dive</h2>
+      <p class="lede">The questions we hear most at reception. Anything else? Give us a ring or drop a note.</p>
+    </header>
+
+    <div class="list" appReveal [revealDelay]="100">
+      @for (item of items; track item.q; let i = $index) {
+        <div class="item" [class.is-open]="open() === i">
+          <h3>
+            <button
+              type="button"
+              [id]="'faq-q-' + i"
+              [attr.aria-expanded]="open() === i"
+              [attr.aria-controls]="'faq-a-' + i"
+              (click)="toggle(i)"
+            >
+              <span class="num mono">{{ (i + 1).toString().padStart(2, '0') }}</span>
+              <span class="q">{{ item.q }}</span>
+              <span class="icon" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="answer" [id]="'faq-a-' + i" role="region" [attr.aria-labelledby]="'faq-q-' + i">
+            <div>
+              <p>{{ item.a }}</p>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

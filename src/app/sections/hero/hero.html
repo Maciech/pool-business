@@ -1,0 +1,61 @@
+<section id="top" class="hero">
+  <app-pool-water class="water" />
+
+  <div class="hero__inner wrap">
+    <div class="hero__copy">
+      <p class="eyebrow hero__eyebrow rise" style="--i: 0">{{ business.tagline }}</p>
+
+      <h1 class="display hero__title">
+        <span class="rise" style="--i: 1">Lanes,</span>
+        <span class="rise hero__title--outline" style="--i: 2">lagoons</span>
+        <span class="rise" style="--i: 3">&amp; long <em>lazy</em></span>
+        <span class="rise" style="--i: 4">days.</span>
+      </h1>
+
+      <p class="hero__lede rise" style="--i: 5">
+        A heated 50&nbsp;m outdoor pool, a splash lagoon for the little ones, a riverside sauna and a swim school that
+        has taught three generations of the neighbourhood to float.
+      </p>
+
+      <div class="hero__actions rise" style="--i: 6">
+        <a class="btn" href="#prices">See ticket prices</a>
+        <a class="btn btn--ghost" href="#hours">Opening hours</a>
+      </div>
+    </div>
+
+    <aside class="board rise" style="--i: 4" aria-label="Today at the lido">
+      <header class="board__head">
+        <span>Today at the lido</span>
+        <span class="board__live" [class.is-open]="hours.isOpen()">{{ hours.isOpen() ? 'Open' : 'Closed' }}</span>
+      </header>
+      <dl class="board__rows">
+        <div>
+          <dt>Water</dt>
+          <dd>{{ business.waterTempC }}<small>°C</small></dd>
+        </div>
+        <div>
+          <dt>Hours</dt>
+          <dd>{{ hours.todaySlot().open }}<small>–</small>{{ hours.todaySlot().close }}</dd>
+        </div>
+        <div>
+          <dt>Next up</dt>
+          <dd class="board__next">
+            @if (nextSession(); as s) {
+              {{ s.start }} <small>{{ s.title }}</small>
+            } @else {
+              <small>No more sessions today</small>
+            }
+          </dd>
+        </div>
+      </dl>
+      @if (hours.todaySlot().note; as note) {
+        <p class="board__note">★ {{ note }}</p>
+      }
+    </aside>
+  </div>
+
+  <div class="rope" aria-hidden="true"></div>
+  <svg class="hero__wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 64c120-32 240-48 360-32s240 64 360 64 240-48 360-64 240 0 360 32v56H0z" />
+  </svg>
+</section>

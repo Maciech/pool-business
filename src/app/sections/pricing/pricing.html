@@ -1,0 +1,74 @@
+<section id="prices" class="section pricing">
+  <div class="wrap">
+    <header class="head" appReveal>
+      <p class="eyebrow">Tickets &amp; passes</p>
+      <h2 class="section-title">Pick your<br />splash</h2>
+      <p class="lede">Simple prices with no joining fees. Under 3s always swim free, and families save the most.</p>
+    </header>
+
+    <div class="toggle" role="radiogroup" aria-label="Pass type" appReveal [style.--thumb-x.%]="activeIndex() * 100">
+      <span class="toggle__thumb" aria-hidden="true"></span>
+      @for (p of passes; track p.id) {
+        <button
+          type="button"
+          role="radio"
+          [attr.aria-checked]="store.passType() === p.id"
+          [class.is-active]="store.passType() === p.id"
+          (click)="store.setPass(p.id)"
+        >
+          <strong>{{ p.label }}</strong>
+          <small>{{ p.hint }}</small>
+        </button>
+      }
+    </div>
+
+    <div class="tickets">
+      @for (t of store.tiers(); track t.category; let i = $index) {
+        <article class="ticket" [class.ticket--featured]="t.featured" appReveal [revealDelay]="i * 80">
+          @if (t.featured) {
+            <span class="ticket__badge">Best value</span>
+          }
+          <div class="ticket__top">
+            <h3>{{ t.label }}</h3>
+            <p class="ticket__who">{{ t.who }}</p>
+          </div>
+          <div class="ticket__price">
+            <!-- re-keyed on pass change so the number animates in -->
+            @for (price of [t.price]; track store.passType()) {
+              <span class="display">{{ price | money }}</span>
+            }
+            @if (t.price) {
+              <small>{{ unit() }}</small>
+            }
+          </div>
+          <ul class="ticket__perks">
+            @for (perk of t.perks; track perk) {
+              <li>{{ perk }}</li>
+            }
+          </ul>
+        </article>
+      }
+    </div>
+
+    <div class="lower">
+      <app-ticket-calculator appReveal />
+
+      <aside class="extras" appReveal [revealDelay]="120">
+        <h3>Add-ons</h3>
+        <ul>
+          @for (x of extras; track x.label) {
+            <li>
+              <span>{{ x.label }}</span>
+              <span class="extras__dots" aria-hidden="true"></span>
+              <span class="mono">{{ x.price | money }}</span>
+            </li>
+          }
+        </ul>
+        <p class="extras__note">
+          Carers of disabled visitors swim free. Swim school terms are priced separately, so ask at reception or send
+          us an enquiry.
+        </p>
+      </aside>
+    </div>
+  </div>
+</section>

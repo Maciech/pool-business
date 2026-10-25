@@ -1,0 +1,31 @@
+<section id="pools" class="section">
+  <div class="wrap">
+    <header class="head" appReveal>
+      <p class="eyebrow">The pools</p>
+      <h2 class="section-title">Four waters,<br />one sunny deck</h2>
+      <p class="lede">
+        Swim fast laps before work, float the afternoon away, or warm up in the sauna after a cold-water dip. Every
+        pool is lifeguarded and kept spotless.
+      </p>
+    </header>
+
+    <div class="grid">
+      @for (f of facilities; track f.id; let i = $index) {
+        <article class="card card--{{ f.tone }}" appReveal [revealDelay]="i * 90">
+          <div class="card__stat">
+            <span class="display">{{ f.stat }}</span>
+            <small>{{ f.statLabel }}</small>
+          </div>
+          <h3>{{ f.name }}</h3>
+          <p>{{ f.description }}</p>
+        </article>
+      }
+    </div>
+
+    <ul class="amenities" appReveal>
+      @for (a of amenities; track a) {
+        <li>{{ a }}</li>
+      }
+    </ul>
+  </div>
+</section>

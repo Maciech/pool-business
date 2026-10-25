@@ -1,0 +1,108 @@
+:host {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.defs {
+  position: absolute;
+}
+
+/* Light nets are larger than the hero so they can drift without showing edges */
+.caustics {
+  position: absolute;
+  inset: -15%;
+  mix-blend-mode: screen;
+  will-change: transform;
+
+  svg {
+    display: block;
+  }
+
+  /* Fade the light toward the left, where the headline sits */
+  mask-image: linear-gradient(100deg, rgba(0, 0, 0, 0.35) 15%, #000 70%);
+
+  &--a {
+    opacity: 0.17;
+    animation: drift-a 14s ease-in-out infinite alternate;
+  }
+
+  &--b {
+    opacity: 0.12;
+    animation: drift-b 19s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes drift-a {
+  from {
+    transform: translate3d(-3%, -2%, 0) scale(1.02);
+  }
+  to {
+    transform: translate3d(3%, 2%, 0) scale(1.06) rotate(1deg);
+  }
+}
+
+@keyframes drift-b {
+  from {
+    transform: translate3d(3%, 1%, 0) scale(1.08) rotate(-1deg);
+  }
+  to {
+    transform: translate3d(-3%, -2%, 0) scale(1.03);
+  }
+}
+
+/* Soft sunlit patches that breathe slowly, so the light never looks static */
+.glints {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(40% 30% at 25% 30%, rgba(201, 244, 239, 0.16), transparent 70%),
+    radial-gradient(35% 25% at 75% 65%, rgba(63, 208, 201, 0.14), transparent 70%);
+  animation: breathe 9s ease-in-out infinite alternate;
+}
+
+@keyframes breathe {
+  to {
+    opacity: 0.45;
+    transform: translate3d(2%, -1%, 0);
+  }
+}
+
+/* Gentle surface swells: a 2880px wave slid left by exactly one period loops seamlessly */
+.swell {
+  --shift: 0px; /* minus one wave period, set per swell from the template */
+  position: absolute;
+  left: 0;
+  overflow: visible;
+  animation: roll linear infinite;
+  will-change: transform;
+
+  path {
+    fill: none;
+    stroke: var(--foam);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+  }
+
+  &:nth-of-type(even) {
+    animation-direction: reverse;
+  }
+}
+
+@keyframes roll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(var(--shift), 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .caustics,
+  .glints,
+  .swell {
+    animation: none;
+  }
+}

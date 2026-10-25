@@ -1,0 +1,119 @@
+<section id="contact" class="section contact">
+  <div class="wrap grid">
+    <div class="info" appReveal>
+      <p class="eyebrow">Find us</p>
+      <h2 class="section-title">Come on<br />in, the water's<br /><em>lovely</em></h2>
+
+      <div class="map" aria-hidden="true">
+        <svg viewBox="0 0 400 240">
+          <path class="river" d="M-10 170C60 140 110 200 190 175s130-90 220-70" />
+          <path class="road" d="M40 -10 80 250M-10 70h420M250 -10l-20 260" />
+          <rect class="pool" x="120" y="88" width="84" height="44" rx="6" />
+          <g class="lanes">
+            <path d="M120 99h84M120 110h84M120 121h84" />
+          </g>
+        </svg>
+        <span class="pin"><span>You're here soon</span></span>
+      </div>
+
+      <dl class="details">
+        <div>
+          <dt>Address</dt>
+          <dd>{{ business.address }}</dd>
+        </div>
+        <div>
+          <dt>Phone</dt>
+          <dd><a [href]="'tel:' + business.phone.replaceAll(' ', '')">{{ business.phone }}</a></dd>
+        </div>
+        <div>
+          <dt>Email</dt>
+          <dd><a [href]="'mailto:' + business.email">{{ business.email }}</a></dd>
+        </div>
+        <div>
+          <dt>Getting here</dt>
+          <dd>Tram 4 &amp; 9 to Promenade · 120 free parking spaces · bike racks at the gate</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="panel" appReveal [revealDelay]="120">
+      @if (sent(); as s) {
+        <div class="done">
+          <span class="done__splash" aria-hidden="true">✓</span>
+          <h3>Thanks, {{ s.name.split(' ')[0] }}!</h3>
+          <p>
+            Your enquiry for <strong>{{ s.guests }}</strong> {{ s.guests === 1 ? 'swimmer' : 'swimmers' }} on
+            <strong>{{ s.date }}</strong> is in. We'll reply to <strong>{{ s.email }}</strong> within one working day.
+          </p>
+          <p class="done__demo mono">Demo mode: no backend is connected, so nothing was actually sent.</p>
+          <button type="button" class="btn btn--ghost" (click)="reset()">Send another</button>
+        </div>
+      } @else {
+        <form novalidate (submit)="onSubmit($event)">
+          <h3>Book or ask us anything</h3>
+
+          <fieldset class="topics">
+            <legend>What's it about?</legend>
+            @for (t of topics; track t.id) {
+              <label class="topic">
+                <input type="radio" [value]="t.id" [formField]="enquiryForm.topic" />
+                <span>{{ t.label }}</span>
+              </label>
+            }
+          </fieldset>
+
+          <div class="row">
+            <label class="field" [class.has-error]="enquiryForm.name().touched() && enquiryForm.name().invalid()">
+              <span>Your name</span>
+              <input type="text" autocomplete="name" [formField]="enquiryForm.name" />
+              @if (enquiryForm.name().touched() && enquiryForm.name().errors()[0]; as err) {
+                <small class="error">{{ err.message }}</small>
+              }
+            </label>
+
+            <label class="field" [class.has-error]="enquiryForm.email().touched() && enquiryForm.email().invalid()">
+              <span>Email</span>
+              <input type="email" autocomplete="email" [formField]="enquiryForm.email" />
+              @if (enquiryForm.email().touched() && enquiryForm.email().errors()[0]; as err) {
+                <small class="error">{{ err.message }}</small>
+              }
+            </label>
+          </div>
+
+          <div class="row">
+            <label class="field" [class.has-error]="enquiryForm.date().touched() && enquiryForm.date().invalid()">
+              <span>Preferred date</span>
+              <input type="date" [formField]="enquiryForm.date" />
+              @if (enquiryForm.date().touched() && enquiryForm.date().errors()[0]; as err) {
+                <small class="error">{{ err.message }}</small>
+              }
+            </label>
+
+            <label class="field" [class.has-error]="enquiryForm.guests().touched() && enquiryForm.guests().invalid()">
+              <span>Swimmers</span>
+              <input type="number" inputmode="numeric" [formField]="enquiryForm.guests" />
+              @if (enquiryForm.guests().touched() && enquiryForm.guests().errors()[0]; as err) {
+                <small class="error">{{ err.message }}</small>
+              }
+            </label>
+          </div>
+
+          <label class="field" [class.has-error]="enquiryForm.message().invalid()">
+            <span>
+              Message <em>(optional)</em>
+              <b class="count mono">{{ messageLength() }}/600</b>
+            </span>
+            <textarea rows="4" [formField]="enquiryForm.message"></textarea>
+            @if (enquiryForm.message().errors()[0]; as err) {
+              <small class="error">{{ err.message }}</small>
+            }
+          </label>
+
+          <button class="btn submit" type="submit" [disabled]="sending()">
+            {{ sending() ? 'Sending…' : 'Send enquiry' }}
+          </button>
+        </form>
+      }
+    </div>
+  </div>
+</section>

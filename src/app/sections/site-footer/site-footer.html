@@ -1,0 +1,35 @@
+<footer class="footer">
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      @for (n of [1, 2]; track n) {
+        <span>Swim</span><span class="o">Splash</span><span>Sauna</span><span class="o">Repeat</span>
+      }
+    </div>
+  </div>
+
+  <div class="wrap cols">
+    <div>
+      <p class="brand">Halcyon<em>Lido</em></p>
+      <p class="muted">{{ business.tagline }}. Run by the community, for the community.</p>
+    </div>
+    <div>
+      <h4>Visit</h4>
+      <p class="muted">{{ business.address }}</p>
+      <p class="muted">{{ business.phone }}</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="#prices">Prices</a></li>
+        <li><a href="#hours">Timetable</a></li>
+        <li><a href="#faq">Pool rules &amp; FAQ</a></li>
+        <li><a href="#contact">Parties &amp; groups</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="wrap legal">
+    <span>© {{ year }} {{ business.name }}</span>
+    <a href="#top">Back to the top ↑</a>
+  </div>
+</footer>
