@@ -48,6 +48,7 @@ logs/
 # Claude Code (personal settings and local worktrees)
 .claude/settings.local.json
 .claude/worktrees/
+CLAUDE.md
 
 # Miscellaneous
 /.angular/
