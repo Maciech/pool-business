@@ -10,16 +10,17 @@
   --pool: #0e7c86;
   --chlorine: #3fd0c9;
   --foam: #c9f4ef;
-  --cream: #f6efe2;
-  --sand: #eadfc8;
+  /* Near-white surfaces with a lagoon tint, like a pale pool floor */
+  --cream: #f3fafa;
+  --sand: #ddf1ef;
   --flag: #ff4f2e;
   --sun: #ffc145;
 
   --text: var(--ink);
   --text-soft: #3c5a6b;
   --surface: var(--cream);
-  --surface-raised: #fffaf1;
-  --line: rgba(6, 40, 61, 0.14);
+  --surface-raised: #ffffff;
+  --line: rgba(6, 40, 61, 0.12);
 
   --font-display: 'Anybody', 'Arial Narrow', sans-serif;
   --font-body: 'Atkinson Hyperlegible Next', 'Segoe UI', sans-serif;
@@ -51,7 +52,10 @@ html {
 
 body {
   margin: 0;
-  background: var(--surface);
+  background:
+    radial-gradient(90% 60% at 85% 0%, rgba(63, 208, 201, 0.12), transparent 70%) fixed,
+    radial-gradient(70% 50% at 0% 100%, rgba(14, 124, 134, 0.08), transparent 70%) fixed,
+    var(--surface);
   color: var(--text);
   font-family: var(--font-body);
   font-size: 1.0625rem;
@@ -116,7 +120,7 @@ textarea {
     content: '';
     width: 28px;
     height: 6px;
-    background: repeating-linear-gradient(90deg, var(--flag) 0 6px, var(--cream) 6px 8px, var(--sun) 8px 14px, var(--cream) 14px 16px);
+    background: repeating-linear-gradient(90deg, var(--flag) 0 6px, #fff 6px 8px, var(--sun) 8px 14px, #fff 14px 16px);
     border-radius: 3px;
   }
 }

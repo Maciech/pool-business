@@ -8,11 +8,14 @@ import { Pricing } from './sections/pricing/pricing';
 import { SiteFooter } from './sections/site-footer/site-footer';
 import { SiteHeader } from './sections/site-header/site-header';
 import { Team } from './sections/team/team';
+import { PoolWater } from './shared/pool-water/pool-water';
+import { WaterRipples } from './shared/water-ripples/water-ripples';
 
 @Component({
   selector: 'app-root',
-  imports: [SiteHeader, Hero, Facilities, Pricing, Hours, Team, Faq, Contact, SiteFooter],
+  imports: [SiteHeader, Hero, Facilities, Pricing, Hours, Team, Faq, Contact, SiteFooter, PoolWater, WaterRipples],
   templateUrl: './app.html',
+  styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {}

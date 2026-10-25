@@ -1,0 +1,16 @@
+:host {
+  position: fixed;
+  inset: 0;
+  z-index: 45; /* above content, below the header */
+  pointer-events: none;
+}
+
+/* The simulation is coarse; the browser's smoothing makes it look like liquid */
+canvas {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: calc(100% + 8px);
+  height: calc(100% + 8px);
+  filter: blur(1.5px);
+}

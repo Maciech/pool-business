@@ -20,9 +20,6 @@
     display: block;
   }
 
-  /* Fade the light toward the left, where the headline sits */
-  mask-image: linear-gradient(100deg, rgba(0, 0, 0, 0.35) 15%, #000 70%);
-
   &--a {
     opacity: 0.17;
     animation: drift-a 14s ease-in-out infinite alternate;
@@ -31,6 +28,32 @@
   &--b {
     opacity: 0.12;
     animation: drift-b 19s ease-in-out infinite alternate;
+  }
+}
+
+/* Dim the light toward the left, where the hero headline sits */
+:host(.fade-left) .caustics {
+  mask-image: linear-gradient(100deg, rgba(0, 0, 0, 0.35) 15%, #000 70%);
+}
+
+/* Pale pool floor: teal lines darken slightly instead of glowing */
+:host(.tone-light) {
+  .caustics {
+    mix-blend-mode: multiply;
+
+    &--a {
+      opacity: 0.05;
+    }
+
+    &--b {
+      opacity: 0.035;
+    }
+  }
+
+  .glints {
+    background:
+      radial-gradient(45% 35% at 20% 25%, rgba(63, 208, 201, 0.12), transparent 70%),
+      radial-gradient(40% 30% at 80% 70%, rgba(14, 124, 134, 0.08), transparent 70%);
   }
 }
 

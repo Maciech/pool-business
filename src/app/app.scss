@@ -1,0 +1,5 @@
+/* Fixed to the viewport, behind all content */
+.page-water {
+  position: fixed;
+  z-index: -1;
+}

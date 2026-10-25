@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+
+let nextId = 0;
+
+/** RGB (0–1) of the light net for each tone, fed into the SVG colour matrix. */
+const NET_COLOR = {
+  dark: [1, 1, 1], // white light on deep water
+  light: [0.055, 0.486, 0.525], // lagoon teal on a pale pool floor
+} as const;
 
 /**
  * Decorative pool surface: two drifting caustic light nets (the shimmer you
@@ -10,9 +18,29 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: './pool-water.html',
   styleUrl: './pool-water.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { 'aria-hidden': 'true' },
+  host: {
+    'aria-hidden': 'true',
+    '[class.tone-light]': "tone() === 'light'",
+    '[class.fade-left]': 'fadeLeft()',
+  },
 })
 export class PoolWater {
+  readonly tone = input<'dark' | 'light'>('dark');
+  /** Dim the light on the left, where a headline usually sits. */
+  readonly fadeLeft = input(false);
+  readonly showSwells = input(true);
+
+  /** Unique per instance, so two pools on one page don't share filter ids. */
+  protected readonly ids = (() => {
+    const n = nextId++;
+    return { a: `caustic-a-${n}`, b: `caustic-b-${n}` };
+  })();
+
+  protected readonly colorMatrix = computed(() => {
+    const [r, g, b] = NET_COLOR[this.tone()];
+    return `0 0 0 0 ${r}  0 0 0 0 ${g}  0 0 0 0 ${b}  1 0 0 0 0`;
+  });
+
   /** Surface swell lines: vertical position (%), amplitude, period and speed. */
   protected readonly swells = [
     { top: 18, amp: 5, period: 320, duration: 19, opacity: 0.18 },
